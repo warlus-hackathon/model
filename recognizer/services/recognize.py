@@ -1,4 +1,3 @@
-from recognizer.handler.recognizer import run
 from recognizer.schemas import Image
 
 
