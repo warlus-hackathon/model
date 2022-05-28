@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "worker"
+version = "0.1.0"
+description = ""
+authors = ["RomanZorkin <zorkin.roman@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Flask = "^2.1.2"
+httpx = "^0.23.0"
+pydantic = "^1.9.1"
+opencv-python = "^4.5.5"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.960"
+flake8 = "^4.0.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
