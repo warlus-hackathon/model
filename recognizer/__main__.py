@@ -1,4 +1,5 @@
 import time
+import os
 
 from recognizer.services import poll, recognize, download, upload
 from recognizer.utils import update_image_field
@@ -20,6 +21,8 @@ def main():
                 recognized_image = recognize.recognize_image(image)
                 was_recognized = 1
                 upload.upload_image(output_filename)
+                os.remove(f'recognizer/file_storage/{filename}')
+                os.remove(f'recognizer/file_storage/{output_filename}')
             finally:
                 recognized_image = update_image_field(image=recognized_image,
                                                       field='was_recognized',
