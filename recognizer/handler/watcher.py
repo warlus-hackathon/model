@@ -173,4 +173,4 @@ def get_number(image_path: Path) -> int:
     return index_size
 
 
-logg.debug(get_number(image_path))
+#logg.debug(get_number(image_path))
