@@ -24,7 +24,7 @@ weights_path = Path('recognizer/handler/model/warlus.weights')
 labels_path = Path('recognizer/handler/model/coco.names')
 # файл изображения
 image_path = Path('recognizer/file_storage/17.jpg')
-filename, ext = image_path.stem, image_path.suffix
+
 
 # загрузка всех меток классов (объектов)
 with open(labels_path, 'r') as f:    
@@ -101,7 +101,7 @@ def create_entities(image: cv2, h: int, w: int) -> tuple[list[Any], list[Any], l
     return (boxes, confidences, class_ids)
 
 
-def render_image(idxs: cv2, image: cv2, boxes, confidences, class_ids) -> None:
+def render_image(idxs: cv2, image: cv2, boxes, confidences, class_ids, filename, ext) -> None:
     # Отрисовка обнаруженных объектов
     ####################################################################
     # перебираем сохраняемые индексы
@@ -154,6 +154,7 @@ def render_image(idxs: cv2, image: cv2, boxes, confidences, class_ids) -> None:
 
 def get_number(image_path: Path) -> int:
     start = time.perf_counter()
+    filename, ext = image_path.stem, image_path.suffix
     image = image_prepare(image_path)
     # Затем нам нужно нормализовать, масштабировать и изменить это изображение
     height, width = image.shape[:2]
@@ -165,8 +166,8 @@ def get_number(image_path: Path) -> int:
     idxs = cv2.dnn.NMSBoxes(boxes, confidences, SCORE_THRESHOLD, IOU_THRESHOLD)
     index_size = len(idxs)
     if index_size > 0:
-        render_image(idxs, image, boxes, confidences, class_ids)
-    create_csv(idxs, boxes, image_path.stem)
+        render_image(idxs, image, boxes, confidences, class_ids, filename, ext)
+    create_csv(idxs, boxes, filename)
     delta_time = time.perf_counter() - start
     logg.debug(f'Потребовалось: {delta_time:.2f}s')
     return index_size
