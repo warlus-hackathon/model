@@ -1,7 +1,7 @@
-import time
 import os
+import time
 
-from recognizer.services import poll, recognize, download, upload
+from recognizer.services import download, poll, recognize, upload
 from recognizer.utils import update_image_field
 
 

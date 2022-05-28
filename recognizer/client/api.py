@@ -1,5 +1,5 @@
-from recognizer.client.task import TaskClient
 from recognizer.client.response import ResponseClient
+from recognizer.client.task import TaskClient
 from recognizer.config import config
 
 

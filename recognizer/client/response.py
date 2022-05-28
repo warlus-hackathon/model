@@ -1,4 +1,5 @@
 import httpx
+
 from recognizer.schemas import Image
 
 

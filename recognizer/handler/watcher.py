@@ -27,7 +27,7 @@ image_path = Path('recognizer/file_storage/17.jpg')
 
 
 # загрузка всех меток классов (объектов)
-with open(labels_path, 'r') as f:    
+with open(labels_path, 'r') as f:
     labels = f.read().strip().split('\n')
     logg.debug(labels)
 
@@ -66,14 +66,14 @@ def create_entities(image: cv2, h: int, w: int) -> tuple[list[Any], list[Any], l
         for detection in output:
             # извлекаем идентификатор класса (метку) и достоверность (как вероятность)
             # обнаружение текущего объекта
-            
+
             scores = detection[5:]
-            
+
             class_id = np.argmax(scores)
             confidence = scores[class_id]
-            #logg.debug(f'detection: {detection}')
-            #logg.debug(f'scores: {scores}')
-            #logg.debug(f'confidence: {confidence}')
+            # logg.debug(f'detection: {detection}')
+            # logg.debug(f'scores: {scores}')
+            # logg.debug(f'confidence: {confidence}')
             # отбросьте слабые прогнозы, убедившись, что обнаруженные
             # вероятность больше минимальной вероятности
             if confidence > CONFIDENCE:
@@ -97,7 +97,7 @@ def create_entities(image: cv2, h: int, w: int) -> tuple[list[Any], list[Any], l
                 boxes.append([x, y, int(width), int(height)])
                 confidences.append(float(confidence))
                 class_ids.append(class_id)
-            #logg.info(f'detection.shape: {detection.shape}')
+            # logg.info(f'detection.shape: {detection.shape}')
     return (boxes, confidences, class_ids)
 
 
@@ -115,7 +115,7 @@ def render_image(idxs: cv2, image: cv2, boxes, confidences, class_ids, filename,
         w, h = boxes[i][2], boxes[i][3]
 
         x_2, y_2 = x + w, y + h
-        
+
         x_center = (x + x_2) // 2
         y_center = (y + y_2) // 2
 
@@ -136,7 +136,7 @@ def render_image(idxs: cv2, image: cv2, boxes, confidences, class_ids, filename,
         )
         overlay = image.copy()
         cv2.rectangle(overlay, box_coords[0], box_coords[1], color=color, thickness=cv2.FILLED)
-        
+
         # добавим непрозрачность (прозрчость) поля
         image = cv2.addWeighted(overlay, 0.6, image, 0.4, 0)
         # теперь поместим текст (метка,  доверие %)
@@ -147,7 +147,7 @@ def render_image(idxs: cv2, image: cv2, boxes, confidences, class_ids, filename,
             color=(0, 0, 0),
             thickness=thickness,
         )
-        
+
     new_image_path = f'recognizer/file_storage/{filename}_yolov3{ext}'
     cv2.imwrite(new_image_path, image)
 
@@ -173,4 +173,4 @@ def get_number(image_path: Path) -> int:
     return index_size
 
 
-#logg.debug(get_number(image_path))
+# logg.debug(get_number(image_path))
