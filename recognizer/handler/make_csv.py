@@ -20,11 +20,12 @@ def create_csv(idxs, boxes, file_name: str):
         x_1, y_1 = boxes[i][0], boxes[i][1]
         w, h = boxes[i][2], boxes[i][3]
         x_2, y_2 = x_1 + w, y_1 + h
-        
+
         x_center = (x_1 + x_2) // 2
         y_center = (y_1 + y_2) // 2
-        #msg = f'x: {x_1} y: {y_1} w: {w} h: {h} x2: {x_2} y2: {y_2}\n center: ({x_center}, {y_center})'
+        # msg = f'x: {x_1} y: {y_1} w: {w} h: {h} x2: {x_2} y2: {y_2}\n
+        # center: ({x_center}, {y_center})'
         centers.append(f'{x_center},{y_center}')
-        #logger.debug(msg)
+        # logger.debug(msg)
     write_csv(centers, file_name)
     logger.debug(centers)
