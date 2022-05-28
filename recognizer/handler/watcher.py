@@ -139,7 +139,7 @@ def render_image(idxs: cv2, image: cv2, boxes, confidences, class_ids) -> None:
             color=(0, 0, 0),
             thickness=thickness,
         )
-    new_image_path = f'recognizer/files/{filename}_yolov3{ext}'
+    new_image_path = f'recognizer/file_storage/{filename}_yolov3{ext}'
     cv2.imwrite(new_image_path, image)
 
 
