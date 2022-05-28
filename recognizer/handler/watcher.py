@@ -6,7 +6,7 @@ from typing import Any
 import cv2
 import numpy as np
 
-from make_csv import create_csv
+from recognizer.handler.make_csv import create_csv
 
 logging.basicConfig(level=logging.DEBUG)
 
