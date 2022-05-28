@@ -6,6 +6,8 @@ from typing import Any
 import cv2
 import numpy as np
 
+from make_csv import create_csv
+
 logging.basicConfig(level=logging.DEBUG)
 
 logg = logging.getLogger(__name__)
@@ -25,12 +27,9 @@ image_path = Path('recognizer/file_storage/17.jpg')
 filename, ext = image_path.stem, image_path.suffix
 
 # загрузка всех меток классов (объектов)
-with open(labels_path, 'r') as f:
-    
+with open(labels_path, 'r') as f:    
     labels = f.read().strip().split('\n')
     logg.debug(labels)
-# генерируем цвета для каждого объекта и последующего построения
-colors = np.random.randint(0, 255, size=(len(labels), 3), dtype='uint8')
 
 
 def image_prepare(image: Path) -> cv2:
@@ -108,14 +107,22 @@ def render_image(idxs: cv2, image: cv2, boxes, confidences, class_ids) -> None:
     # перебираем сохраняемые индексы
     font_scale = 1
     thickness = 2
+    point_size = 1
 
     for i in idxs.flatten():
         # извлекаем координаты ограничивающего прямоугольника
         x, y = boxes[i][0], boxes[i][1]
         w, h = boxes[i][2], boxes[i][3]
+
+        x_2, y_2 = x + w, y + h
+        
+        x_center = (x + x_2) // 2
+        y_center = (y + y_2) // 2
+
         # рисуем прямоугольник ограничивающей рамки и подписываем на изображении
-        color = [int(c) for c in colors[class_ids[i]]]
-        cv2.rectangle(image, (x, y), (x + w, y + h), color=color, thickness=thickness)
+        color = (0, 255, 0)
+        cv2.circle(image, (x_center, y_center), point_size, color, thickness)
+        cv2.rectangle(image, (x, y), (x + w, y + h), color=(0, 255, 0), thickness=thickness)
         text = f'{labels[class_ids[i]]}: {confidences[i]:.2f}'
         # вычисляем ширину и высоту текста, чтобы рисовать прозрачные поля в качестве фона текста
         (text_width, text_height) = cv2.getTextSize(
@@ -129,9 +136,10 @@ def render_image(idxs: cv2, image: cv2, boxes, confidences, class_ids) -> None:
         )
         overlay = image.copy()
         cv2.rectangle(overlay, box_coords[0], box_coords[1], color=color, thickness=cv2.FILLED)
+        
         # добавим непрозрачность (прозрчость) поля
         image = cv2.addWeighted(overlay, 0.6, image, 0.4, 0)
-        # теперь поместим текст (меткаЖ доверие %)
+        # теперь поместим текст (метка,  доверие %)
         cv2.putText(
             image, text, (x, y - 5),
             cv2.FONT_HERSHEY_SIMPLEX,
@@ -139,11 +147,12 @@ def render_image(idxs: cv2, image: cv2, boxes, confidences, class_ids) -> None:
             color=(0, 0, 0),
             thickness=thickness,
         )
+        
     new_image_path = f'recognizer/file_storage/{filename}_yolov3{ext}'
     cv2.imwrite(new_image_path, image)
 
 
-def recognize():
+def get_number(image_path: Path) -> int:
     start = time.perf_counter()
     image = image_prepare(image_path)
     # Затем нам нужно нормализовать, масштабировать и изменить это изображение
@@ -154,10 +163,13 @@ def recognize():
     ####################################################################
     # выполнить не максимальное подавление с учетом оценок, определенных ранее
     idxs = cv2.dnn.NMSBoxes(boxes, confidences, SCORE_THRESHOLD, IOU_THRESHOLD)
-    if len(idxs) > 0:
+    index_size = len(idxs)
+    if index_size > 0:
         render_image(idxs, image, boxes, confidences, class_ids)
+    create_csv(idxs, boxes, image_path.stem)
     delta_time = time.perf_counter() - start
     logg.debug(f'Потребовалось: {delta_time:.2f}s')
+    return index_size
 
 
-recognize()
+#logg.debug(get_number(image_path))
