@@ -21,7 +21,7 @@ weights_path = Path('recognizer/handler/model/warlus.weights')
 # файл всех меток классов (объектов)
 labels_path = Path('recognizer/handler/model/coco.names')
 # файл изображения
-image_path = Path('recognizer/files/17.jpg')
+image_path = Path('recognizer/file_storage/17.jpg')
 filename, ext = image_path.stem, image_path.suffix
 
 # загрузка всех меток классов (объектов)
