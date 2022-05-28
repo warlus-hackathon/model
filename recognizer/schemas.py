@@ -6,3 +6,4 @@ class Image(BaseModel):
     name: str
     path: str
     obj_number: int
+    was_recognized: int
