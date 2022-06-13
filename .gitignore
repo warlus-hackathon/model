@@ -2,7 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-file_storage/
 
 # C extensions
 *.so
@@ -130,5 +129,6 @@ dmypy.json
 .pyre/
 
 # project
+file_storage/
 recognizer/handler/yolov5/runs/detect/
 best.pt
