@@ -131,4 +131,4 @@ dmypy.json
 # project
 file_storage/
 recognizer/handler/yolov5/runs/detect/
-best.pt
+warlus.pt

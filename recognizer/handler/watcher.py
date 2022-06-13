@@ -6,21 +6,19 @@ from PIL import Image
 
 from recognizer.handler.yolov5 import detect
 
-
-model = 'recognizer/handler/yolov5/models/best.pt'
-image = Path('recognizer/file_storage/33.jpg')
+model = 'recognizer/handler/yolov5/models/warlus.pt'
 file_storage = 'recognizer/file_storage'
 
 
-def read_labels(labels: Path) -> list[str]:
+def read_labels(labels: Path) -> list[list[str]]:
     with open(labels, 'r') as label:
         coord = label.readlines()
 
     boxes = []
     for box in coord:
         box = box.replace('\n', '')
-        box = box.split()
-        boxes.append(box)
+        box_list = box.split()
+        boxes.append(box_list)
 
     labels_dir = labels.parent
     shutil.copy(labels, labels_dir.parent / labels.name)
@@ -36,7 +34,7 @@ def write_image(image_path: Path, boxes: list):
     for box in boxes:
         x = int(float(box[1]) * width)
         y = int(float(box[2]) * height)
-        cv2.circle(image, (x, y), 3, (0, 255, 0), 5)
+        cv2.circle(image, (x, y), 3, (0, 255, 0), 4)
 
     msg = f'Warlus number = {len(boxes)}'
     cv2.putText(image, msg, (50, 60), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 255, 0), 10, cv2.LINE_AA)
