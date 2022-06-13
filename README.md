@@ -14,7 +14,7 @@ cd frontworkerend
 pip install poetry 
 ```
 ## install of packages:
-При установке пакета seaborn poetry выдает ошибку, установка возможна только pip install seaborn
+
 ```bash
 poetry install
 ```
@@ -28,3 +28,11 @@ create .env file (see .env.default)
 ```bash
 make run
 ```
+## Локальное распознование изображения
+Для локального распознования изображения (вне работы сервиса) необходимо открыть файл detect.ipynb в корне проекта.
+В первом поле произвести необходимые настройки:
+1. !python recognizer/handler/yolov5/detect.py - модуль для запуска распознования
+2. --weights best.pt - адрес модели распознования - пока в корне проекта (скачть можно отсюда - https://drive.google.com/file/d/1-idIA8fuW1ejXhFq560a1EUdnOp4JrOs/view?usp=sharing)
+3. --source recognizer/file_storage/17.jpg - путь к распозноваемому файлу
+4. --save-txt - сохраняет как результат txt файл с характеристиками 
+5. --save-conf - сохряняет в txt файл координаты прямоугольников
