@@ -131,3 +131,4 @@ dmypy.json
 
 # project
 recognizer/handler/model/
+best.pt

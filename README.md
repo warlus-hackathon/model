@@ -14,7 +14,7 @@ cd frontworkerend
 pip install poetry 
 ```
 ## install of packages:
-
+При установке пакета seaborn poetry выдает ошибку, установка возможна только pip install seaborn
 ```bash
 poetry install
 ```
