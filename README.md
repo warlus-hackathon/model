@@ -33,7 +33,7 @@ make run
 
 В первом поле произвести необходимые настройки:
 ```python
-!python recognizer/handler/yolov5/detect.py --weights recognizer/handler/yolov5/runs/train/best.pt --source recognizer/file_storage/17.jpg --save-txt --save-conf
+!python recognizer/handler/yolov5/detect.py --weights best.pt --source recognizer/file_storage/17.jpg --save-txt --save-conf
 ```
 
 

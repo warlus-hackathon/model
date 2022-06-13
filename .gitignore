@@ -130,5 +130,5 @@ dmypy.json
 .pyre/
 
 # project
-recognizer/handler/model/
+recognizer/handler/yolov5/runs/detect/
 best.pt
