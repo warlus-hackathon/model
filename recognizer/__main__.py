@@ -1,8 +1,8 @@
 import os
 import time
 
-#from recognizer.services import download, poll, recognize, upload
-#from recognizer.utils import update_image_field
+from recognizer.services import download, poll, recognize, upload
+from recognizer.utils import update_image_field
 
 
 def main():
@@ -33,7 +33,4 @@ def main():
 
 
 if __name__ == "__main__":
-    #main()
-    from pathlib import Path
-    from recognizer.handler import watcher
-    print(watcher.get_number(Path('recognizer/file_storage/34.jpg')))
+    main()
