@@ -12,7 +12,7 @@ image = Path('recognizer/file_storage/33.jpg')
 file_storage = 'recognizer/file_storage'
 
 
-def read_labels(labels: Path)-> list[str]:
+def read_labels(labels: Path) -> list[str]:
     with open(labels, 'r') as label:
         coord = label.readlines()
 
@@ -21,8 +21,11 @@ def read_labels(labels: Path)-> list[str]:
         box = box.replace('\n', '')
         box = box.split()
         boxes.append(box)
-    labels_dir = labels.parent.parent
+
+    labels_dir = labels.parent
+    shutil.copy(labels, labels_dir.parent / labels.name)
     shutil.rmtree(labels_dir, ignore_errors=True)
+
     return boxes
 
 
@@ -30,7 +33,6 @@ def write_image(image_path: Path, boxes: list):
     image = cv2.imread(str(image_path))
     height, width, _ = image.shape
 
-    print(height, width)
     for box in boxes:
         x = int(float(box[1]) * width)
         y = int(float(box[2]) * height)
@@ -42,7 +44,7 @@ def write_image(image_path: Path, boxes: list):
     cv2.imwrite(new_image, image)
 
 
-def get_number(image_path: Path = image) -> int:
+def get_number(image_path: Path) -> int:
     im = Image.open(str(image_path))
     detect.run(
         weights=model,
@@ -53,9 +55,7 @@ def get_number(image_path: Path = image) -> int:
         save_conf=True,
         project=file_storage,
     )
-    labels = Path(file_storage, 'exp/labels', f'{image_path.stem}.txt')
+    labels = Path(file_storage, 'exp', f'{image_path.stem}.txt')
     boxes = read_labels(labels)
     write_image(image_path, boxes)
     return len(boxes)
-
-get_number()

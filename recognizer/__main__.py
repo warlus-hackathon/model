@@ -34,4 +34,6 @@ def main():
 
 if __name__ == "__main__":
     #main()
+    from pathlib import Path
     from recognizer.handler import watcher
+    print(watcher.get_number(Path('recognizer/file_storage/31.jpg')))
