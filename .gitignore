@@ -2,7 +2,6 @@
 __pycache__/
 *.py[cod]
 *$py.class
-file_storage/
 
 # C extensions
 *.so
@@ -130,4 +129,6 @@ dmypy.json
 .pyre/
 
 # project
-recognizer/handler/model/
+file_storage/
+recognizer/handler/yolov5/runs/detect/
+warlus.pt

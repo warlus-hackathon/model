@@ -12,5 +12,7 @@ class ResponseClient:
         image_id = image.dict()['uid']
         headers = {"Content-Type": "application/json"}
         data = image.json()
-        res = httpx.put(f'{self.url}/images/{image_id}', data=data, headers=headers)
+        res = httpx.put(
+            f'{self.url}/images/{image_id}', data=data, headers=headers,  # type: ignore
+        )
         res.raise_for_status()

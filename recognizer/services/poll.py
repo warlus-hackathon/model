@@ -1,8 +1,10 @@
+from typing import Optional
+
 from recognizer.client.api import appclient
 from recognizer.schemas import Image
 
 
-def get_next_task() -> Image:
+def get_next_task() -> Optional[Image]:
     return appclient.task.get_task()
 
 
