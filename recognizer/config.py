@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 
 class AwsConfig(BaseModel):
+    endpoint: str
     key_id: str
     key: str
     bucket_input_images: str
@@ -18,6 +19,7 @@ class AppConfig(BaseModel):
 
 def load_from_env() -> AppConfig:
     endpoint = os.environ['ENDPOINT']
+    aws_endpoint = os.environ['AWS_ENDPOINT']
     aws_bucket_input_images = os.environ['AWS_BUCKET_NAME_INPUT_IMAGES']
     aws_bucket_output_images = os.environ['AWS_BUCKET_NAME_OUTPUT_IMAGES']
     aws_bucket_output_cvs = os.environ['AWS_BUCKET_NAME_OUTPUT_CVS']
@@ -26,6 +28,7 @@ def load_from_env() -> AppConfig:
     return AppConfig(
         endpoint=endpoint,
         aws=AwsConfig(
+            endpoint=aws_endpoint,
             key_id=aws_access_key_id,
             key=aws_secret_access_key,
             bucket_input_images=aws_bucket_input_images,
