@@ -103,4 +103,6 @@ RUN poetry install --no-dev
 
 COPY recognizer /worker/recognizer
 
+RUN wget -q --no-check-certificate -P /worker/recognizer/handler/yolov5/models https://disk.yandex.ru/d/59BHljOyfpIc5A
+
 CMD ["python3", "-m", "recognizer"]
