@@ -103,6 +103,7 @@ RUN poetry install --no-dev
 
 COPY recognizer /worker/recognizer
 
-RUN wget -q --no-check-certificate -P /worker/recognizer/handler/yolov5/models https://disk.yandex.ru/d/59BHljOyfpIc5A
+RUN mkdir /worker/recognizer/file_storage
+RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1-idIA8fuW1ejXhFq560a1EUdnOp4JrOs' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1-idIA8fuW1ejXhFq560a1EUdnOp4JrOs" -O /worker/recognizer/handler/yolov5/models/warlus.pt && rm -rf /tmp/cookies.txt
 
 CMD ["python3", "-m", "recognizer"]
